@@ -1,7 +1,10 @@
 # UseImage_Component_React
  Write a useful 'UseImage' component in React
+ <br/>
 
 ![Img.gif](./pic/useimage-img.gif)
+
+
 
 ## Introduction
 
@@ -10,6 +13,7 @@
 1. The picture loading is too slow. You need to display the 'loading' placeholder；
 2. Failed to load pictures. Load alternate pictures or display 'error' placeholders。
 
+<br/>
 > As developers, we may go through the following stages：
 
 - Stage 1: use 'onload' and 'onerror' on the 'img' tag for processing；
@@ -117,26 +121,8 @@ function useImage({
 - Stage 1: Change the input parameter 'src' to 'srclist', and the value is the 'URL' of the picture or the 'URL' array of the picture (including alternative pictures)；
 - Stage 1: Load from the first one. If it fails, load the second one until one is successful or all fail. The process ends。
 
-For Example：
+For Example(Define the 'promisefind' method to complete the above logic of loading pictures)：
 
-```ts
-const removeBlankArrayElements = (a: string[]) => a.filter((x) => x);
-
-const stringToArray = (x: string | string[]) => (Array.isArray(x) ? x : [x]);
-
-function useImage({
-  srcList,
-}: {
-  srcList: string | string[];
-}): { src: string | undefined; loading: boolean; error: any } {
-  // get url array
-  const sourceList = removeBlankArrayElements(stringToArray(srcList));
-  // get cache keys
-  const sourceKey = sourceList.join('');
-}
-```
-
-The next step is the important loading process. Define the 'promisefind' method to complete the above logic of loading pictures。
 
 ```ts
 /**
@@ -283,5 +269,5 @@ function useImage({
 | loadImg  | Optional. The image loading method returns a promise | (src:string)=>Promise<void> | imgPromise |
 
 
-#### Example
- **Demo source：[click](https://github.com/ThorinChen/Slider_Component_React/blob/main/src/Vertify/index.md)**
+## Example
+ **Demo source：[click](https://github.com/ThorinChen/UseImage_Component_React/tree/main/example)**

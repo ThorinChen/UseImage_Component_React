@@ -14,7 +14,8 @@
 2. Failed to load pictures. Load alternate pictures or display 'error' placeholders。
 
 <br/>
-> As developers, we may go through the following stages：
+
+>  As developers, we may go through the following stages：
 
 - Stage 1: use 'onload' and 'onerror' on the 'img' tag for processing；
 - Stage 2: write a more general component；
@@ -217,45 +218,6 @@ function useImage({
 
 ![useImage-srcList](./pic/useImage-srcList.png)
 
-### define imgPromise
-
-As mentioned earlier, users may insert their own logic during the process of loading pictures, so the 'imgpromise' method is passed in as an optional parameter 'loadimg'. If users want to customize the loading method, they can pass in this parameter。
-
-```diff
-function useImage({
-+ loadImg = imgPromise,
-  srcList,
-}: {
-+ loadImg?: (src: string) => Promise<void>;
-  srcList: string | string[];
-}): { src: string | undefined; loading: boolean; error: any } {
-  const [loading, setLoading] = React.useState(true);
-  const [error, setError] = React.useState(null);
-  const [value, setValue] = React.useState<string | undefined>(undefined);
-
-  const sourceList = removeBlankArrayElements(stringToArray(srcList));
-  const sourceKey = sourceList.join('');
-
-  React.useEffect(() => {
-    if (!cache[sourceKey]) {
--     cache[sourceKey] = promiseFind(sourceList, imgPromise);
-+     cache[sourceKey] = promiseFind(sourceList, loadImg);
-    }
-
-    cache[sourceKey]
-      .then(src => {
-        setLoading(false);
-        setValue(src);
-      })
-      .catch(error => {
-        setLoading(false);
-        setError(error);
-      });
-  }, [sourceKey]);
-
-  return { loading: loading, src: value, error: error };
-}
-```
 
 
 ## Parameters of 'useImage'
